@@ -10,7 +10,6 @@ def save_picture(url, path):
     directory = path
     if not os.path.exists(directory):
         os.makedirs(directory)
-    link = url
     filename = 'hubble.jpeg'
     response = requests.get(url)
     response.raise_for_status()
@@ -32,12 +31,23 @@ def fetch_spacex_last_launch(url, path):
 
 
 def get_extension(url):
-    return urlparse(url).path.split('.')[-1]
+    if '.' in urlparse(url).path:
+        return urlparse(url).path.split('.')[-1]
 
 
 def main():
-    url = 'https://apod.nasa.gov/apod/image/2107/LRVBPIX3M82Crop1024.jpg?755=ieutj&uetoe=2435'
-    print(get_extension(url))
+    API_for_NASA = 'O9o85vTmNfadhABiMevAgQ3VdbxE05NUq7I4HcA2'
+    url = f'https://api.nasa.gov/planetary/apod?count=30&api_key={API_for_NASA}'
+    photos = requests.get(url).json()
+
+    for num, photo in enumerate(photos):
+        directory = 'images'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        response = requests.get(photo['url'])
+        ext = get_extension(photo['url'])
+        with open(f'{directory}/spacex_{num}.{ext}', 'wb') as file:
+            file.write(response.content)
 
 
 if __name__ == '__main__':
