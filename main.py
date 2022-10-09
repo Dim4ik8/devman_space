@@ -1,5 +1,9 @@
+import urllib.parse
+
 import requests
 import os
+from urllib.parse import urlparse
+from pprint import pprint as pp
 
 
 def save_picture(url, path):
@@ -27,10 +31,13 @@ def fetch_spacex_last_launch(url, path):
             file.write(response.content)
 
 
-def main():
-    spaceX = 'https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a'
+def get_extension(url):
+    return urlparse(url).path.split('.')[-1]
 
-    fetch_spacex_last_launch(spaceX, 'images')
+
+def main():
+    url = 'https://apod.nasa.gov/apod/image/2107/LRVBPIX3M82Crop1024.jpg?755=ieutj&uetoe=2435'
+    print(get_extension(url))
 
 
 if __name__ == '__main__':
