@@ -3,7 +3,6 @@ import urllib.parse
 import requests
 import os
 from urllib.parse import urlparse
-from pprint import pprint as pp
 import datetime
 
 
