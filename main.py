@@ -18,22 +18,7 @@ def save_picture(url, path):
         file.write(response.content)
 
 
-def fetch_spacex_last_launch(url, path):
-    response = requests.get(url)
-    response.raise_for_status()
-    photos = response.json()['links']['flickr']['original']
-    directory = path
-    pp(photos)
-    if photos:
-        if not os.path.exists(directory):
-            os.makedirs(directory)
 
-        for number, photo in enumerate(photos):
-            response = requests.get(photo)
-            with open(f'{directory}/spacex_{number}.jpg', 'wb') as file:
-                file.write(response.content)
-    else:
-        print('Извините, на выбранном запуске фотографии не делались..')
 
 def get_extension(url):
     if '.' in urlparse(url).path:
@@ -84,7 +69,7 @@ def get_epic_from_nasa(date, path):
 
 
 def main():
-    fetch_spacex_last_launch('https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a', 'gett')
+    pass
 
 if __name__ == '__main__':
     main()
