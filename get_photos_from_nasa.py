@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import argparse
-from main import get_extension
+from help import get_extension
 
 
 def main():

@@ -1,11 +1,5 @@
-import urllib.parse
-
 import requests
 import os
-from urllib.parse import urlparse
-import datetime
-from pprint import pprint as pp
-
 
 def save_picture(url, path):
     directory = path
@@ -16,17 +10,6 @@ def save_picture(url, path):
     response.raise_for_status()
     with open(f'{directory}/{filename}', 'wb') as file:
         file.write(response.content)
-
-
-
-
-def get_extension(url):
-    if '.' in urlparse(url).path:
-        return urlparse(url).path.split('.')[-1]
-
-
-
-
 
 def main():
     pass
