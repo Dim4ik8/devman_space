@@ -12,7 +12,7 @@ def main():
         description='Сохраняем фотографии запуска'
     )
     parser.add_argument('path', help='Введите название папки, куда будут сохранены фото')
-    parser.add_argument('launch', help='Введите ID запуска')
+    parser.add_argument('launch', help='Введите ID запуска', nargs='?', default='latest')
 
     args = parser.parse_args()
     path = args.path
