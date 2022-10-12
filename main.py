@@ -4,6 +4,7 @@ import requests
 import os
 from urllib.parse import urlparse
 import datetime
+from pprint import pprint as pp
 
 
 def save_picture(url, path):
@@ -22,13 +23,17 @@ def fetch_spacex_last_launch(url, path):
     response.raise_for_status()
     photos = response.json()['links']['flickr']['original']
     directory = path
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    pp(photos)
+    if photos:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-    for number, photo in enumerate(photos):
-        with open(f'{directory}/spacex_{number}', 'wb') as file:
-            file.write(response.content)
-
+        for number, photo in enumerate(photos):
+            response = requests.get(photo)
+            with open(f'{directory}/spacex_{number}.jpg', 'wb') as file:
+                file.write(response.content)
+    else:
+        print('Извините, на выбранном запуске фотографии не делались..')
 
 def get_extension(url):
     if '.' in urlparse(url).path:
@@ -79,8 +84,7 @@ def get_epic_from_nasa(date, path):
 
 
 def main():
-    get_epic_from_nasa('2019-02-28', 'stones')
-
+    fetch_spacex_last_launch('https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a', 'gett')
 
 if __name__ == '__main__':
     main()
