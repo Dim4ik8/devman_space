@@ -10,7 +10,7 @@ from help import get_extension
 def main():
     load_dotenv()
     token = os.getenv('TOKEN_FOR_NASA')
-    tlg_token = os.getenv('TELEGRAM_TOKEN')
+    telegram_token = os.getenv('TELEGRAM_TOKEN')
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии APOD и публикуем в телеграмм канал'
     )
@@ -32,15 +32,16 @@ def main():
         with open(f'{path}/spacex_{num}.{ext}', 'wb') as file:
             file.write(response.content)
 
-    bot = telegram.Bot(token=tlg_token)
+    bot = telegram.Bot(token=telegram_token)
     chat_id = os.getenv('CHANNEL_ID')
 
-    for filename in os.listdir(path):
-        f = os.path.join(path, filename)
+    while True:
+        for filename in os.listdir(path):
+            f = os.path.join(path, filename)
 
-        if os.path.isfile(f):
-            bot.send_document(chat_id=chat_id, document=open(f, 'rb'))
-            time.sleep(10)
+            if os.path.isfile(f):
+                bot.send_document(chat_id=chat_id, document=open(f, 'rb'))
+                time.sleep(10)
 
 
 if __name__ == '__main__':
