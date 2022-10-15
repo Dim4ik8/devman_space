@@ -14,8 +14,9 @@ def main():
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии APOD и публикуем в телеграмм канал'
     )
-    parser.add_argument('path', help='Введите название папки, куда будут сохранены фото')
-    parser.add_argument('count', help='Введите количество фото для сохранения и публикования', nargs='?', default='1')
+    parser.add_argument('path', help='Введите название папки, куда будут сохранены фото', nargs='?', default='images')
+    parser.add_argument('count', help='Введите количество фото для сохранения и публикования', nargs='?', default='10')
+    parser.add_argument('sec', help='Введите задержку для опубликования фото в секундах', nargs='?', default='3600')
 
     args = parser.parse_args()
     path = args.path
