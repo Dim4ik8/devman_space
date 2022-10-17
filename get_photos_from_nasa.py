@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import argparse
 from help import get_extension
+from pathlib import Path
 
 
 def main():
@@ -25,7 +26,8 @@ def main():
         os.makedirs(path, exist_ok=True)
         response = requests.get(photo['url'])
         ext = get_extension(photo['url'])
-        with open(f'{path}/spacex_{num}.{ext}', 'wb') as file:
+        filename = Path.cwd() / path / f'spacex_{num}.{ext}'
+        with open(filename, 'wb') as file:
             file.write(response.content)
 
 

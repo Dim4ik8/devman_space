@@ -2,6 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import argparse
+from pathlib import Path
 
 
 def main():
@@ -27,7 +28,8 @@ def main():
 
         for number, photo in enumerate(photos):
             response = requests.get(photo)
-            with open(f'{path}/spacex_{number}.jpg', 'wb') as file:
+            filename = Path.cwd() / path / f'spacex_{number}.jpg'
+            with open(filename, 'wb') as file:
                 file.write(response.content)
     else:
         print('Извините, на выбранном запуске фотографии не делались..')

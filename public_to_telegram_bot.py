@@ -26,11 +26,11 @@ def main():
     photos = requests.get(url).json()
 
     for num, photo in enumerate(photos):
-        if not os.path.exists(path):
-            os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
         response = requests.get(photo['url'])
         ext = get_extension(photo['url'])
-        with open(f'{path}/spacex_{num}.{ext}', 'wb') as file:
+        filename = Path.cwd() / path / f'spacex_{num}.{ext}'
+        with open(filename, 'wb') as file:
             file.write(response.content)
 
     bot = telegram.Bot(token=telegram_token)
