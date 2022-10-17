@@ -7,7 +7,7 @@ import random
 
 def main():
     load_dotenv()
-    token = os.getenv('TOKEN_FOR_NASA')
+    token = os.environ['TOKEN_FOR_NASA']
     telegram_token = os.getenv('TELEGRAM_TOKEN')
     parser = argparse.ArgumentParser(
         description='Публикуем фото в телеграмм канал'
@@ -19,7 +19,7 @@ def main():
     path = args.path
 
     bot = telegram.Bot(token=telegram_token)
-    chat_id = os.getenv('CHANNEL_ID')
+    chat_id = os.environ['CHANNEL_ID']
 
     if os.path.isfile(path):
         bot.send_document(chat_id=chat_id, document=open(path, 'rb'))

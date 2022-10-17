@@ -6,7 +6,7 @@ import argparse
 
 def main():
     load_dotenv()
-    token = os.getenv('TOKEN_FOR_NASA')
+    token = os.environ['TOKEN_FOR_NASA']
 
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии запуска'

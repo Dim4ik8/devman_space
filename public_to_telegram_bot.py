@@ -9,8 +9,8 @@ from help import get_extension
 
 def main():
     load_dotenv()
-    token = os.getenv('TOKEN_FOR_NASA')
-    telegram_token = os.getenv('TELEGRAM_TOKEN')
+    token = os.environ['TOKEN_FOR_NASA']
+    telegram_token = os.environ['TELEGRAM_TOKEN']
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии APOD и публикуем в телеграмм канал'
     )
@@ -34,7 +34,7 @@ def main():
             file.write(response.content)
 
     bot = telegram.Bot(token=telegram_token)
-    chat_id = os.getenv('CHANNEL_ID')
+    chat_id = os.environ['CHANNEL_ID']
 
     while True:
         for filename in os.listdir(path):
