@@ -6,7 +6,6 @@ import argparse
 
 def main():
     load_dotenv()
-    token = os.environ['TOKEN_FOR_NASA']
 
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии запуска'
@@ -24,8 +23,7 @@ def main():
     response.raise_for_status()
     photos = response.json()['links']['flickr']['original']
     if photos:
-        if not os.path.exists(path):
-            os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
 
         for number, photo in enumerate(photos):
             response = requests.get(photo)
