@@ -19,7 +19,7 @@ def main():
     path = args.path
 
     bot = telegram.Bot(token=telegram_token)
-    chat_id = os.environ['CHANNEL_ID']
+    chat_id = os.environ['TG_CHAT_ID']
 
     if os.path.isfile(path):
         with open(path, 'rb') as file:

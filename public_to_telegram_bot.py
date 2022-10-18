@@ -37,7 +37,7 @@ def main():
             file.write(response.content)
 
     bot = telegram.Bot(token=telegram_token)
-    chat_id = os.environ['CHANNEL_ID']
+    chat_id = os.environ['TG_CHAT_ID']
 
     while True:
         for filename in os.listdir(path):
