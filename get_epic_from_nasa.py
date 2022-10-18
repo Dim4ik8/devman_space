@@ -28,6 +28,7 @@ def main():
     day = date_for_photo.strftime('%d')
 
     pictures = requests.get(url, params=params).json()
+    pictures.raise_for_status()
 
     if pictures:
         for number, picture in enumerate(pictures):
@@ -36,6 +37,7 @@ def main():
             image = picture['image']
             response = requests.get(
                 f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png', params=params)
+            response.raise_for_status()
             with open(f'{path}/nasa_apod_{number}.png', 'wb') as file:
                 file.write(response.content)
 

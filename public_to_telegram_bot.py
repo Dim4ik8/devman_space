@@ -30,6 +30,7 @@ def main():
     for num, photo in enumerate(photos):
         os.makedirs(path, exist_ok=True)
         response = requests.get(photo['url'])
+        response.raise_for_status()
         ext = get_extension(photo['url'])
         filename = Path.cwd() / path / f'spacex_{num}.{ext}'
         with open(filename, 'wb') as file:

@@ -28,6 +28,7 @@ def main():
 
         for number, photo in enumerate(photos):
             response = requests.get(photo)
+            response.raise_for_status()
             filename = Path.cwd() / path / f'spacex_{number}.jpg'
             with open(filename, 'wb') as file:
                 file.write(response.content)
