@@ -1,15 +1,14 @@
 from urllib.parse import urlparse
-
+import requests
+from pathlib import Path
 
 def get_extension(url):
     if '.' in urlparse(url).path:
         return urlparse(url).path.split('.')[-1]
 
-# count = '2'
-# token = '73yi3hg5j3hg'
-# # url = https://api.nasa.gov/planetary/apod?count={count}&api_key={token}
-# params = {'count': count, 'api_key': token }
-# url = 'https://api.nasa.gov/planetary/apod'
-#
-# response = requests.get(url, params=params)
-# print(requests.get(url, params=params))
+def save_pictures(url, path, num, ext):
+    response = requests.get(url)
+    response.raise_for_status()
+    filename = Path.cwd() / path / f'spacex_{num}.{ext}'
+    with open(filename, 'wb') as file:
+        file.write(response.content)

@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import argparse
-from help import get_extension
+from help import get_extension, save_pictures
 from pathlib import Path
 
 
@@ -22,16 +22,11 @@ def main():
     url = 'https://api.nasa.gov/planetary/apod'
     params = {'count': count, 'api_key': token}
     photos = requests.get(url, params=params).json()
-    photos.raise_for_status()
 
     for num, photo in enumerate(photos):
         os.makedirs(path, exist_ok=True)
-        response = requests.get(photo['url'])
-        response.raise_for_status()
         ext = get_extension(photo['url'])
-        filename = Path.cwd() / path / f'spacex_{num}.{ext}'
-        with open(filename, 'wb') as file:
-            file.write(response.content)
+        save_pictures(photo['url'], path, num, ext)
 
 
 if __name__ == '__main__':

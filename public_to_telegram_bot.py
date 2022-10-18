@@ -44,7 +44,8 @@ def main():
             f = os.path.join(path, filename)
 
             if os.path.isfile(f):
-                bot.send_document(chat_id=chat_id, document=open(f, 'rb'))
+                with open(f, 'rb') as file:
+                    bot.send_document(chat_id=chat_id, document=file)
                 time.sleep(10)
 
 

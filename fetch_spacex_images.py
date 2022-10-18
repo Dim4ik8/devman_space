@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import argparse
-from pathlib import Path
+from help import save_pictures
 
 
 def main():
@@ -27,11 +27,8 @@ def main():
         os.makedirs(path, exist_ok=True)
 
         for number, photo in enumerate(photos):
-            response = requests.get(photo)
-            response.raise_for_status()
-            filename = Path.cwd() / path / f'spacex_{number}.jpg'
-            with open(filename, 'wb') as file:
-                file.write(response.content)
+            save_pictures(photo, path, number, '.jpg')
+
     else:
         print('Извините, на выбранном запуске фотографии не делались..')
 

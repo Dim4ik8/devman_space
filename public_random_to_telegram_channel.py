@@ -22,10 +22,12 @@ def main():
     chat_id = os.environ['CHANNEL_ID']
 
     if os.path.isfile(path):
-        bot.send_document(chat_id=chat_id, document=open(path, 'rb'))
+        with open(path, 'rb') as file:
+            bot.send_document(chat_id=chat_id, document=file)
     else:
         random_photo = random.choice(os.listdir('images'))
-        bot.send_document(chat_id=chat_id, document=open(f'images/{random_photo}', 'rb'))
+        with open(f'images/{random_photo}', 'rb') as file:
+            bot.send_document(chat_id=chat_id, document=file)
 
 
 if __name__ == '__main__':

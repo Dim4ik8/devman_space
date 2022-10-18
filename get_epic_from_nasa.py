@@ -6,6 +6,7 @@ import datetime
 from urllib.parse import urlparse
 
 
+
 def main():
     load_dotenv()
     token = os.environ['TOKEN_FOR_NASA']
@@ -28,13 +29,15 @@ def main():
     day = date_for_photo.strftime('%d')
 
     pictures = requests.get(url, params=params).json()
-    pictures.raise_for_status()
+
 
     if pictures:
         for number, picture in enumerate(pictures):
-            if not os.path.exists(path):
-                os.makedirs(path)
+            os.makedirs(path, exist_ok=True)
+
             image = picture['image']
+            url_new = f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png'
+
             response = requests.get(
                 f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png', params=params)
             response.raise_for_status()
