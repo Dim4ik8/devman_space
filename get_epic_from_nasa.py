@@ -19,15 +19,15 @@ def main():
     path = args.path
     date = args.date
 
-    url = f'https://api.nasa.gov/EPIC/api/natural/date/{date}?api_key={token}'
-
+    url = f'https://api.nasa.gov/EPIC/api/natural/date/{date}'
+    params = {'api_key': token}
     date_for_photo = datetime.date.fromisoformat(urlparse(url).path.split('/')[-1])
 
     year = date_for_photo.year
     month = date_for_photo.strftime('%m')
     day = date_for_photo.strftime('%d')
 
-    pictures = requests.get(url).json()
+    pictures = requests.get(url, params=params).json()
 
     if pictures:
         for number, picture in enumerate(pictures):
@@ -35,7 +35,7 @@ def main():
                 os.makedirs(path)
             image = picture['image']
             response = requests.get(
-                f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png?api_key={token}')
+                f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png', params=params)
             with open(f'{path}/nasa_apod_{number}.png', 'wb') as file:
                 file.write(response.content)
 

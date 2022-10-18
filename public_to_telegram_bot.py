@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 import argparse
 from help import get_extension
-
+from pathlib import Path
 
 def main():
     load_dotenv()
@@ -22,8 +22,10 @@ def main():
     path = args.path
     count = args.count
 
-    url = f'https://api.nasa.gov/planetary/apod?count={count}&api_key={token}'
-    photos = requests.get(url).json()
+
+    url = 'https://api.nasa.gov/planetary/apod'
+    params = {'count': count, 'api_key': token}
+    photos = requests.get(url, params=params).json()
 
     for num, photo in enumerate(photos):
         os.makedirs(path, exist_ok=True)
