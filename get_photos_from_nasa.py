@@ -2,8 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import argparse
-from help import get_extension, save_pictures
-from pathlib import Path
+from help import save_pictures
 
 
 def main():
@@ -12,7 +11,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Сохраняем фотографии APOD'
     )
-    parser.add_argument('path', help='Введите название папки, куда будут сохранены фото')
+    parser.add_argument('path', help='Введите название папки, куда будут сохранены фото', nargs='?', default='images')
     parser.add_argument('count', help='Введите количество фото для сохранения', nargs='?', default='1')
 
     args = parser.parse_args()
@@ -25,7 +24,7 @@ def main():
 
     for num, photo in enumerate(photos):
         os.makedirs(path, exist_ok=True)
-        ext = get_extension(photo['url'])
+        ext = os.path.splitext(photo['url'])[-1]
         save_pictures(photo['url'], path, num, ext)
 
 

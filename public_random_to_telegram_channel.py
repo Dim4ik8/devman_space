@@ -1,14 +1,14 @@
-import telegram
 import os
 from dotenv import load_dotenv
 import argparse
 import random
+from help import send_img_to_telegram
+from pathlib import Path
 
 
 def main():
     load_dotenv()
-    token = os.environ['TOKEN_FOR_NASA']
-    telegram_token = os.getenv('TELEGRAM_TOKEN')
+    telegram_token = os.environ['TELEGRAM_TOKEN']
     parser = argparse.ArgumentParser(
         description='Публикуем фото в телеграмм канал'
     )
@@ -18,16 +18,15 @@ def main():
     args = parser.parse_args()
     path = args.path
 
-    bot = telegram.Bot(token=telegram_token)
     chat_id = os.environ['TG_CHAT_ID']
 
     if os.path.isfile(path):
-        with open(path, 'rb') as file:
-            bot.send_document(chat_id=chat_id, document=file)
+        send_img_to_telegram(path, chat_id, telegram_token)
+
     else:
         random_photo = random.choice(os.listdir('images'))
-        with open(f'images/{random_photo}', 'rb') as file:
-            bot.send_document(chat_id=chat_id, document=file)
+        path = Path.cwd() / 'images' / f'{random_photo}'
+        send_img_to_telegram(path, chat_id, telegram_token)
 
 
 if __name__ == '__main__':

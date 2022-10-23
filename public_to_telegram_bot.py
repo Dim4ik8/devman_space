@@ -1,52 +1,30 @@
-import time
-import requests
-import telegram
 import os
 from dotenv import load_dotenv
 import argparse
-from help import get_extension
-from pathlib import Path
+from help import publication_to_telegram
+
 
 def main():
     load_dotenv()
-    token = os.environ['TOKEN_FOR_NASA']
     telegram_token = os.environ['TELEGRAM_TOKEN']
     parser = argparse.ArgumentParser(
-        description='Сохраняем фотографии APOD и публикуем в телеграмм канал'
+        description='Публикуем фотографии в телеграмм канал'
     )
-    parser.add_argument('path', help='Введите название папки, куда будут сохранены фото', nargs='?', default='images')
-    parser.add_argument('count', help='Введите количество фото для сохранения и публикования', nargs='?', default='10')
+    parser.add_argument('path', help='Введите название папки, из которой будут опубликованы фото', nargs='?',
+                        default='images')
     parser.add_argument('sec', help='Введите задержку для опубликования фото в секундах', nargs='?', default='3600')
 
     args = parser.parse_args()
     path = args.path
-    count = args.count
+    sec = int(args.sec)
 
-
-    url = 'https://api.nasa.gov/planetary/apod'
-    params = {'count': count, 'api_key': token}
-    photos = requests.get(url, params=params).json()
-
-    for num, photo in enumerate(photos):
-        os.makedirs(path, exist_ok=True)
-        response = requests.get(photo['url'])
-        response.raise_for_status()
-        ext = get_extension(photo['url'])
-        filename = Path.cwd() / path / f'spacex_{num}.{ext}'
-        with open(filename, 'wb') as file:
-            file.write(response.content)
-
-    bot = telegram.Bot(token=telegram_token)
     chat_id = os.environ['TG_CHAT_ID']
 
-    while True:
-        for filename in os.listdir(path):
-            f = os.path.join(path, filename)
+    if os.path.isdir(path):
+        publication_to_telegram(path, chat_id, telegram_token, sec)
 
-            if os.path.isfile(f):
-                with open(f, 'rb') as file:
-                    bot.send_document(chat_id=chat_id, document=file)
-                time.sleep(10)
+    else:
+        print('Папка не найдена, укажите верный путь до фото! ')
 
 
 if __name__ == '__main__':

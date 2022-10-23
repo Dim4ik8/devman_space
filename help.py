@@ -1,14 +1,32 @@
-from urllib.parse import urlparse
 import requests
 from pathlib import Path
+import telegram
+import os
+import time
 
-def get_extension(url):
-    if '.' in urlparse(url).path:
-        return urlparse(url).path.split('.')[-1]
 
-def save_pictures(url, path, num, ext):
-    response = requests.get(url)
+def save_pictures(url, path, num, ext, params=None):
+    response = requests.get(url, params=params)
     response.raise_for_status()
-    filename = Path.cwd() / path / f'spacex_{num}.{ext}'
+    filename = Path.cwd() / path / f'spacex_{num}{ext}'
     with open(filename, 'wb') as file:
         file.write(response.content)
+
+
+def send_img_to_telegram(path, chat_id, token):
+    bot = telegram.Bot(token=token)
+    with open(path, 'rb') as file:
+        bot.send_document(chat_id=chat_id, document=file)
+
+
+def publication_to_telegram(path, chat_id, token, sec):
+    while True:
+        for filename in os.listdir(path):
+            f = os.path.join(path, filename)
+
+            try:
+                if os.path.isfile(f):
+                    send_img_to_telegram(f, chat_id, token)
+            except:
+                continue
+            time.sleep(sec)
