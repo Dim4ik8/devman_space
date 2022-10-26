@@ -27,6 +27,6 @@ def publication_to_telegram(path, chat_id, token, sec):
             try:
                 if os.path.isfile(f):
                     send_img_to_telegram(f, chat_id, token)
-            except:
+            except ConnectionError:
                 continue
             time.sleep(sec)
