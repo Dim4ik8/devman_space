@@ -27,7 +27,7 @@ def main():
         os.makedirs(path, exist_ok=True)
 
         for number, photo in enumerate(photos):
-            save_pictures(photo, path, number, 'jpg')
+            save_pictures(photo, path, number, '.jpg')
 
     else:
         print('Извините, на выбранном запуске фотографии не делались..')
