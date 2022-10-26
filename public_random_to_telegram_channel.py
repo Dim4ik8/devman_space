@@ -25,7 +25,8 @@ def main():
 
     else:
         random_photo = random.choice(os.listdir('images'))
-        path = Path.cwd() / 'images' / f'{random_photo}'
+        path = Path.cwd() / 'images' / random_photo
+        print(path)
         send_img_to_telegram(path, chat_id, telegram_token)
 
 
