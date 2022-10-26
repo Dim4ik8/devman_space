@@ -13,7 +13,7 @@ def main():
         description='Публикуем фото в телеграмм канал'
     )
 
-    parser.add_argument('path', help='Введите путь к публикуемому фото', nargs='?', default='images/')
+    parser.add_argument('path', help='Введите путь к публикуемому фото', nargs='?', default=Path.cwd() / 'images')
 
     args = parser.parse_args()
     path = args.path
