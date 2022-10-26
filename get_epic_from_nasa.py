@@ -22,7 +22,8 @@ def main():
 
     url = f'https://api.nasa.gov/EPIC/api/natural/date/{date}'
     params = {'api_key': token}
-    date_for_photo = datetime.date.fromisoformat(urlparse(url).path.split('/')[-1])
+
+    date_for_photo = datetime.date.fromisoformat(date)
 
     year = date_for_photo.year
     month = date_for_photo.strftime('%m')
