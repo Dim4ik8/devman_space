@@ -8,7 +8,7 @@ import time
 def save_pictures(url, path, num, ext, params=None):
     response = requests.get(url, params=params)
     response.raise_for_status()
-    filename = Path.cwd() / path / f'spacex_{num}{ext}'
+    filename = Path.cwd() / path / f'space_{num}{ext}'
     with open(filename, 'wb') as file:
         file.write(response.content)
 
