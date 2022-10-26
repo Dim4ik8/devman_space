@@ -24,8 +24,9 @@ def main():
 
     for num, photo in enumerate(photos):
         os.makedirs(path, exist_ok=True)
-        ext = os.path.splitext(photo['url'])[-1]
-        save_pictures(photo['url'], path, num, ext)
+        if photo['media_type'] == 'image':
+            ext = os.path.splitext(photo['url'])[-1]
+            save_pictures(photo['url'], path, num, ext)
 
 
 if __name__ == '__main__':
