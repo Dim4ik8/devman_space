@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 import argparse
 import datetime
-from urllib.parse import urlparse
 from help import save_pictures
 
 

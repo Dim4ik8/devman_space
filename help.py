@@ -19,14 +19,19 @@ def send_img_to_telegram(path, chat_id, token):
         bot.send_document(chat_id=chat_id, document=file)
 
 
-def publication_to_telegram(path, chat_id, token, sec):
-    while True:
-        for filename in os.listdir(path):
-            f = os.path.join(path, filename)
+def collect_files_in_dir(path):
+    files = []
+    for filename in os.listdir(path):
+        files.append(Path.cwd() / path / filename)
+    return files
 
-            try:
-                if os.path.isfile(f):
-                    send_img_to_telegram(f, chat_id, token)
-            except ConnectionError:
-                continue
-            time.sleep(sec)
+
+def publication_to_telegram(path, chat_id, token, sec):
+    files = collect_files_in_dir(path)
+    while True:
+        try:
+            for file in files:
+                send_img_to_telegram(file, chat_id, token)
+        except ConnectionError:
+            continue
+        time.sleep(sec)
