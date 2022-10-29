@@ -19,7 +19,7 @@ def send_img_to_telegram(path, chat_id, token):
         bot.send_document(chat_id=chat_id, document=file)
 
 
-def collect_files_in_dir(path):
+def collect_files_in_dir_path(path):
     files = []
     for filename in os.listdir(path):
         files.append(Path.cwd() / path / filename)
@@ -27,7 +27,7 @@ def collect_files_in_dir(path):
 
 
 def publication_to_telegram(path, chat_id, token, sec):
-    files = collect_files_in_dir(path)
+    files = collect_files_in_dir_path(path)
     while True:
         try:
             for file in files:
