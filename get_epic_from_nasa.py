@@ -37,7 +37,7 @@ def main():
             image = picture['image']
             url_new = f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image}.png'
 
-            save_pictures(url_new, path, number, '.png', params)
+            save_pictures(url_new, path, 'nasa_epic', number, '.png', params)
 
 
     else:

@@ -26,7 +26,7 @@ def main():
         os.makedirs(path, exist_ok=True)
         if photo['media_type'] == 'image':
             ext = os.path.splitext(photo['url'])[-1]
-            save_pictures(photo['url'], path, num, ext)
+            save_pictures(photo['url'], path, 'nasa_apod', num, ext)
 
 
 if __name__ == '__main__':
