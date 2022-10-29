@@ -32,6 +32,6 @@ def publication_to_telegram(path, chat_id, token, sec):
         try:
             for file in files:
                 send_img_to_telegram(file, chat_id, token)
-        except ConnectionError:
+        except telegram.error.NetworkError:
             continue
         time.sleep(sec)
