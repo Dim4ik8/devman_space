@@ -21,8 +21,9 @@ def send_img_to_telegram(path, chat_id, token):
 
 def collect_files_in_dir_path(path):
     files = []
-    for filename in os.listdir(path):
-        files.append(Path.cwd() / path / filename)
+    for (dirpath, dirnames, filenames) in os.walk(path):
+        for file in filenames:
+            files.append(Path.cwd() / dirpath / file)
     return files
 
 
@@ -33,6 +34,6 @@ def publication_to_telegram(path, chat_id, token, sec):
             for file in files:
                 send_img_to_telegram(file, chat_id, token)
         except telegram.error.NetworkError:
-            time.sleep(30)
+            time.sleep(60)
             continue
         time.sleep(sec)
